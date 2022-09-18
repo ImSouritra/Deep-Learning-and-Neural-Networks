@@ -1,3 +1,14 @@
+import os
+import pathlib
+import datetime
+import zipfile
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+import matplotlib.pyplot as plt
+import matplot.image mpimg
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
 def plot_loss_curves(history):
     loss = history.history["loss"]
     val_loss = history.history["val_loss"]
