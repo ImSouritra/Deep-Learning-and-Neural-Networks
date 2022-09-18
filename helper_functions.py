@@ -34,10 +34,15 @@ def visualize(original, augmented):
   plt.imshow(augmented)
   
   
-def preprocess_image(filename):
+def preprocess_and_plot_prediction(filename,model,class_names):
   image = tf.io.read_file(filename)
   image = tf.image.decode_image(image)
   image = tf.image.resize(image,size=(224,224))
   image = image/255.
   image = tf.expand_dims(image,axis=0)
-  return image  
+  predictions = model.predict(image)
+  predicted_label = class_names[np.argmax(predictions)]
+  plt.figure(figsize=(10,7))
+  plt.imshow(image)
+  plt.title(f"Predicted Label: {predicted_label}")
+  plt.axis("off")
