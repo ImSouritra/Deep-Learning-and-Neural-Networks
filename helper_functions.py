@@ -9,6 +9,27 @@ import matplotlib.pyplot as plt
 import matplot.image mpimg
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
+def view_random_image(directory_path,class_name):
+  filepath = directory_path+"/"+class_name+"/"
+  print(filepath)
+  random_image = random.sample(os.listdir(filepath),1)
+  img = mpimg.imread(filepath+"/"+random_image[0])
+  plt.imshow(img)
+  plt.title(class_name)
+  plt.axis("off")
+  return img
+
+def create_model(model_url,num_classes,image_shape):
+  """Takes a model url from tensorflow hub and build a model with it"""
+  feature_extractor_layer = hub.KerasLayer(model_url,trainable=False,name="feature_extraction_layer",input_shape=image_shape+(3,))
+
+  model = tf.keras.Sequential([
+      feature_extractor_layer,
+      layers.Dense(num_classes,activation="softmax",name="output_layer")
+  ])
+  return model
+
+
 def plot_loss_curves(history):
     loss = history.history["loss"]
     val_loss = history.history["val_loss"]
@@ -34,7 +55,7 @@ def plot_loss_curves(history):
     plt.legend()
     
     
-def visualize(original, augmented):
+def original_vs_augmented(original, augmented):
   fig = plt.figure()
   plt.subplot(1,2,1)
   plt.title('Original image')
@@ -44,6 +65,11 @@ def visualize(original, augmented):
   plt.title('Augmented image')
   plt.imshow(augmented)
   
+def create_tensorboard_callback(dir_name, experiment_name):
+  log_dir = dir_name +"/"+ experiment_name + datetime.datetime.now().strftime("%Y$m$d-%H%M%S")
+  tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir,histogram_freq=0,write_graph=True,update_freq='epoch')
+  print(f"Creating tensorboard log file in {log_dir}")
+  return tensorboard_callback    
   
 def preprocess_and_plot_prediction(filename,model,class_names):
   image = tf.io.read_file(filename)
