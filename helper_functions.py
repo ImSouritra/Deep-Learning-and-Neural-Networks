@@ -2,6 +2,7 @@ import os
 import pathlib
 import datetime
 import zipfile
+import random
 import numpy as np
 import pandas as pd
 import tensorflow as tf
