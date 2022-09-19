@@ -6,9 +6,12 @@ import random
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+import tensorflow_hub as hub
 import matplotlib.pyplot as plt
 import  matplotlib.image as mpimg
+from tensorflow.keras import layers
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
 
 def view_random_image(directory_path,class_name):
   filepath = directory_path+"/"+class_name+"/"
