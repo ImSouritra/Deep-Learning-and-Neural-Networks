@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 import matplotlib.pyplot as plt
-import matplot.image import mpimg
+from matplotlib.image import mpimg
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 def view_random_image(directory_path,class_name):
