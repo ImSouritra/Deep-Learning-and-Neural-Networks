@@ -87,3 +87,21 @@ def preprocess_and_plot_prediction(filename,model,class_names):
   plt.imshow(tf.squeeze(image))
   plt.title(f"Predicted Label: {predicted_label}")
   plt.axis("off")
+  
+def plot_truth_and_predictions(images,true_labels,class_names,model):
+    """Plot 30 images and show their truth labels and predicted labels:
+       images: images to plot
+       true_labels: The truth labels of the images
+       class_names: The class_names of the labels
+       model: model to use for prediction 
+       Works only for binary classification problem
+    """
+    predictions = np.around(model.predict(images))
+    predictions  
+    plt.figure(figsize=(20,15))
+    for i in range(30):
+      plt.subplot(10,3,i+1)
+      plt.imshow(images[i])
+      plt.title(f"Truth:{class_names[true_labels[i]]} Predicted:{class_names[int(predictions[i][0])]}")
+      plt.axis("off")
+    plt.tight_layout()    
