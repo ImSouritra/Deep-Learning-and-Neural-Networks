@@ -13,7 +13,28 @@ from tensorflow.keras import layers
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
+def unzip(filepath):
+  """
+  Unzip a zipfile
+  """
+  file_ref = zipfile.ZipFile(filepath)
+  print("Unzipping zipfile for ya!!")
+  file_ref.extractall()
+  file_ref.close()
+  
+def walk_through_dir(file_path):
+  """
+  Walk through directory and print what is underlying
+  """
+   for dir_path, dir_name , filename in os.walk("file_path"):
+        print(f"There are {len(dir_path)} directories and {len(filename)} images in {dir_path}") 
+
+
+
 def view_random_image(directory_path,class_name):
+  """
+  View random image from a given directory path and a class name
+  """
   filepath = directory_path+"/"+class_name+"/"
   print(filepath)
   random_image = random.sample(os.listdir(filepath),1)
@@ -35,6 +56,7 @@ def create_model(model_url,num_classes,image_shape):
 
 
 def plot_loss_curves(history):
+    """Plot loss curves of a model from its history"""
     loss = history.history["loss"]
     val_loss = history.history["val_loss"]
 
@@ -60,6 +82,7 @@ def plot_loss_curves(history):
     
     
 def original_vs_augmented(original, augmented):
+  """Show original vs augmented photo side by side"""
   fig = plt.figure()
   plt.subplot(1,2,1)
   plt.title('Original image')
@@ -76,6 +99,7 @@ def create_tensorboard_callback(dir_name, experiment_name):
   return tensorboard_callback    
   
 def preprocess_and_plot_prediction(filename,model,class_names):
+  """" Preaprocess a given image and plot the image with its predicted label"""
   image = tf.io.read_file(filename)
   image = tf.image.decode_image(image)
   image = tf.image.resize(image,size=(224,224))
