@@ -26,7 +26,7 @@ def walk_through_dir(file_path):
   """
   Walk through directory and print what is underlying
   """
-   for dir_path, dir_name , filename in os.walk("file_path"):
+  for dir_path, dir_name , filename in os.walk("file_path"):
         print(f"There are {len(dir_path)} directories and {len(filename)} images in {dir_path}") 
 
 
