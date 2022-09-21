@@ -156,7 +156,7 @@ def make_train_test_split(root_dir,class_names):
 
     ## here 0.75 = training ratio , (0.95-0.75) = validation ratio , (1-0.95) =  
     ##training ratio  
-    train_FileNames,test_FileNames = np.split(np.array(allFileNames),int(len(allFileNames)*0.95)])
+    train_FileNames,test_FileNames = np.split(np.array(allFileNames),[int(len(allFileNames)*0.95)])
 
     # #Converting file names from array to list
 
