@@ -1,5 +1,6 @@
 import os
 import pathlib
+import shutil
 import datetime
 import zipfile
 import random
@@ -128,4 +129,48 @@ def plot_truth_and_predictions(images,true_labels,class_names,model):
       plt.imshow(images[i])
       plt.title(f"Truth:{class_names[true_labels[i]]} Predicted:{class_names[int(predictions[i][0])]}")
       plt.axis("off")
-    plt.tight_layout()    
+    plt.tight_layout()   
+    
+def make_train_test_split(root_dir,class_names):   
+    """" Split your data into train and test directory
+    args:
+        root_dir: The name of the root directory
+        class_names: A list of class names
+        
+    """
+    root_dir = root_dir
+    classes = class_names
+
+    for cls in classes:
+        os.makedirs(root_dir +'train/' + cls)
+        os.makedirs(root_dir +'test/' + cls)
+
+    ## creating partition of the data after shuffeling
+
+    for cls in classes:
+        src = root_dir + cls # folder to copy images from
+        print(src)
+
+    allFileNames = os.listdir(src)
+    np.random.shuffle(allFileNames)
+
+    ## here 0.75 = training ratio , (0.95-0.75) = validation ratio , (1-0.95) =  
+    ##training ratio  
+    train_FileNames,test_FileNames = np.split(np.array(allFileNames),int(len(allFileNames)*0.95)])
+
+    # #Converting file names from array to list
+
+    train_FileNames = [src+'/'+ name for name in train_FileNames]
+    test_FileNames = [src+'/' + name for name in test_FileNames]
+
+    print('Total images  : '+ cls + ' ' +str(len(allFileNames)))
+    print('Training : '+ cls + ' '+str(len(train_FileNames)))
+    print('Testing : '+ cls + ' '+str(len(test_FileNames)))
+    
+    ## Copy pasting images to target directory
+
+    for name in train_FileNames:
+        shutil.copy(name, root_dir +'train/'+cls )
+
+    for name in test_FileNames:
+        shutil.copy(name,root_dir +'test/'+cls )
