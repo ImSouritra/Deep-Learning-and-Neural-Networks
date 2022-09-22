@@ -142,43 +142,43 @@ def make_train_test_split(root_dir,class_names):
     classes = class_names
 
     for cls in classes:
-    os.makedirs(root_dir +'train/' + cls)
-    os.makedirs(root_dir +'val/' + cls)
-    os.makedirs(root_dir +'test/' + cls)
+      os.makedirs(root_dir +'train/' + cls)
+      os.makedirs(root_dir +'val/' + cls)
+      os.makedirs(root_dir +'test/' + cls)
     
-## creating partition of the data after shuffeling
+    ## creating partition of the data after shuffeling
 
-for cls in classes:
-    src = root_dir + cls # folder to copy images from
-    print(src)
+    for cls in classes:
+      src = root_dir + cls # folder to copy images from
+      print(src)
 
-    allFileNames = os.listdir(src)
-    np.random.shuffle(allFileNames)
+      allFileNames = os.listdir(src)
+      np.random.shuffle(allFileNames)
 
-    ## here 0.75 = training ratio , (0.95-0.75) = validation ratio , (1-0.95) = test ratio 
-    ##training ratio  
-    train_FileNames,val_FileNames,test_FileNames = np.split(np.array(allFileNames),[int(len(allFileNames)*0.75),int(len(allFileNames)*0.95)])
+      ## here 0.75 = training ratio , (0.95-0.75) = validation ratio , (1-0.95) = test ratio 
+      ##training ratio  
+      train_FileNames,val_FileNames,test_FileNames = np.split(np.array(allFileNames),[int(len(allFileNames)*0.75),int(len(allFileNames)*0.95)])
 
-    # #Converting file names from array to list
+      # #Converting file names from array to list
 
-    train_FileNames = [src+'/'+ name for name in train_FileNames]
-    val_FileNames = [src+'/' + name for name in val_FileNames]
-    test_FileNames = [src+'/' + name for name in test_FileNames]
+      train_FileNames = [src+'/'+ name for name in train_FileNames]
+      val_FileNames = [src+'/' + name for name in val_FileNames]
+      test_FileNames = [src+'/' + name for name in test_FileNames]
 
-    print('Total images  : '+ cls + ' ' +str(len(allFileNames)))
-    print('Training : '+ cls + ' '+str(len(train_FileNames)))
-    print('Validation : '+ cls + ' ' +str(len(val_FileNames)))
-    print('Testing : '+ cls + ' '+str(len(test_FileNames)))
-    
-    ## Copy pasting images to target directory
+      print('Total images  : '+ cls + ' ' +str(len(allFileNames)))
+      print('Training : '+ cls + ' '+str(len(train_FileNames)))
+      print('Validation : '+ cls + ' ' +str(len(val_FileNames)))
+      print('Testing : '+ cls + ' '+str(len(test_FileNames)))
 
-    for name in train_FileNames:
-        shutil.copy(name, root_dir + 'train/'+cls )
+      ## Copy pasting images to target directory
 
-
-    for name in val_FileNames:
-        shutil.copy(name, root_dir +'val/'+cls )
+      for name in train_FileNames:
+          shutil.copy(name, root_dir + 'train/'+cls )
 
 
-    for name in test_FileNames:
-        shutil.copy(name,root_dir + 'test/'+cls )
+      for name in val_FileNames:
+          shutil.copy(name, root_dir +'val/'+cls )
+
+
+      for name in test_FileNames:
+          shutil.copy(name,root_dir + 'test/'+cls )
