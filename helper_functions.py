@@ -172,6 +172,16 @@ def make_train_test_split(root_dir,class_names):
 
       ## Copy pasting images to target directory
       
+      for name in train_FileNames:
+          shutil.copy(name, root_dir + 'train/'+cls )
+
+
+      for name in val_FileNames:
+          shutil.copy(name, root_dir +'val/'+cls )
+
+
+      for name in test_FileNames:
+          shutil.copy(name,root_dir + 'test/'+cls )
       
 def compare_historys(original_history, new_history, initial_epochs=5):
     """
@@ -218,13 +228,3 @@ def compare_historys(original_history, new_history, initial_epochs=5):
     plt.show()      
       
 
-      for name in train_FileNames:
-          shutil.copy(name, root_dir + 'train/'+cls )
-
-
-      for name in val_FileNames:
-          shutil.copy(name, root_dir +'val/'+cls )
-
-
-      for name in test_FileNames:
-          shutil.copy(name,root_dir + 'test/'+cls )
